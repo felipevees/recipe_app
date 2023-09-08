@@ -17,78 +17,124 @@ export function Recipe() {
       throw error;
     }
   };
+
   useEffect(() => {
     fetchDetails();
   }, [name]);
+
   return (
-    <div>
+    <RecipeContainer>
       {details ? (
-        <DetailWrapper>
-          <div>
+        <>
+          <RecipeHeader>
             <h2>{details.title}</h2>
+          </RecipeHeader>
+          <RecipeImage>
             <img src={details.image} alt={details.title} />
-          </div>
-          <Info>
-            <Button
-              className={activeTab === "instructions" ? "active" : ""}
-              onClick={() => setActiveTab("instructions")}
-            >
-              Instructions
-            </Button>
-            <Button
-              className={activeTab === "ingredients" ? "active" : ""}
-              onClick={() => setActiveTab("ingredients")}
-            >
-              Ingredients
-            </Button>
-            {activeTab === "instructions" && (
-              <div>
-                <h3 dangerouslySetInnerHTML={{ __html: details.summary }}></h3>
-                <br />
-                <h3
-                  dangerouslySetInnerHTML={{ __html: details.instructions }}
-                ></h3>
-              </div>
-            )}
-            {activeTab === "ingredients" && (
-              <>
-                {details && details.extendedIngredients ? (
-                  <ul>
-                    {details.extendedIngredients.map((ingredient) => (
-                      <li key={ingredient.id}>{ingredient.original}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>No ingredients available.</p>
+          </RecipeImage>
+          <RecipeContent>
+            <RecipeTabs>
+              <ButtonContainer>
+                <Button
+                  className={activeTab === "instructions" ? "active" : ""}
+                  onClick={() => setActiveTab("instructions")}
+                >
+                  Instructions
+                </Button>
+                <Button
+                  className={activeTab === "ingredients" ? "active" : ""}
+                  onClick={() => setActiveTab("ingredients")}
+                >
+                  Ingredients
+                </Button>
+              </ButtonContainer>
+
+              <TabContent>
+                {activeTab === "instructions" && (
+                  <div>
+                    <h3
+                      dangerouslySetInnerHTML={{ __html: details.summary }}
+                    ></h3>
+                    <br />
+                    <h3
+                      dangerouslySetInnerHTML={{ __html: details.instructions }}
+                    ></h3>
+                  </div>
                 )}
-              </>
-            )}
-          </Info>
-        </DetailWrapper>
+                {activeTab === "ingredients" && (
+                  <>
+                    {details && details.extendedIngredients ? (
+                      <ul>
+                        {details.extendedIngredients.map((ingredient) => (
+                          <li key={ingredient.id}>{ingredient.original}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>No ingredients available.</p>
+                    )}
+                  </>
+                )}
+              </TabContent>
+            </RecipeTabs>
+          </RecipeContent>
+        </>
       ) : (
         <h1>Loading...</h1>
       )}
-    </div>
+    </RecipeContainer>
   );
 }
 
-const DetailWrapper = styled.div`
-  margin-top: 10rem;
-  margin-bottom: 5rem;
+const RecipeContainer = styled.div`
+  margin-top: 2rem;
   display: flex;
-  .active {
-    background: linear-gradient(35deg, #494949, #313131);
-    color: white;
-  }
+  flex-direction: column;
+  align-items: center;
+`;
+
+const RecipeHeader = styled.div`
+  text-align: center;
   h2 {
-    margin-bottom: 2rem;
+    font-size: 2rem;
   }
-  li {
-    font-size: 1.2rem;
-    line-height: 2.5rem;
+`;
+
+const RecipeContent = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  width: 60%;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
   }
-  ul {
-    margin-top: 2rem;
+`;
+
+const RecipeImage = styled.div`
+  img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+`;
+
+const RecipeTabs = styled.div`
+  margin-top: 2rem;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    margin-left: 2rem;
+    width: auto;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: 768px) {
+    justify-content: flex-start;
   }
 `;
 
@@ -99,7 +145,26 @@ const Button = styled.button`
   border: 2px solid black;
   margin-right: 2rem;
   font-weight: 600;
+  &.active {
+    background: linear-gradient(35deg, #494949, #313131);
+    color: white;
+  }
 `;
-const Info = styled.div`
-  margin-left: 10rem;
+
+const TabContent = styled.div`
+  margin-top: 2rem;
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    li {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+  }
 `;

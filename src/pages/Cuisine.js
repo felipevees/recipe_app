@@ -17,6 +17,7 @@ export function Cuisine() {
       console.log(error);
     }
   };
+
   useEffect(() => {
     getCuisine(type);
   }, [type]);
@@ -38,23 +39,43 @@ export function Cuisine() {
           </Card>
         ))
       ) : (
-        <p></p>
+        <p>No results found.</p>
       )}
     </Grid>
   );
 }
+
 const Grid = styled(motion.div)`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
-  grid-gap: 3rem;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  ); // Ajusta el ancho mínimo y máximo de las columnas según tus necesidades.
+  grid-gap: 1.5rem; // Reduce el espacio entre las tarjetas en pantallas pequeñas.
+  padding: 1.5rem; // Agrega un espacio adicional alrededor del contenedor en pantallas pequeñas.
+
+  @media (max-width: 768px) {
+    justify-content: center; // Centra el contenido en pantallas pequeñas.
+  }
 `;
+
 const Card = styled(motion.div)`
   img {
     width: 100%;
     border-radius: 2rem;
   }
+
   a {
     text-align: center;
     padding: 1rem;
+    text-decoration: none; // Agrega un estilo de enlace a los títulos.
+    color: #333; // Cambia el color del texto de los títulos.
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h4 {
+    margin-top: 1rem; // Agrega espacio entre la imagen y el título.
   }
 `;

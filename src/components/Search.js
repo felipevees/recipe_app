@@ -48,6 +48,7 @@ export function Search() {
             outline: "none",
             width: "100%", // Set the input width to 100% to make it responsive.
           }}
+          placeholder="Buscar"
           onChange={(e) => setInput(e.target.value)}
           value={input}
         />

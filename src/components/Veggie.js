@@ -34,11 +34,17 @@ export function Veggie() {
         <h3>Our vegetarian picks</h3>
         <Splide
           options={{
-            perPage: 3,
+            perPage: 3, // Número predeterminado de tarjetas por página (pantallas medianas y grandes).
             arrows: false,
             pagination: false,
             drag: "free",
-            gap: "5rem",
+            gap: "1rem", // Espacio entre las tarjetas en pantallas pequeñas.
+            breakpoints: {
+              768: {
+                perPage: 1, // Número de tarjetas por página en pantallas medianas.
+                gap: "1rem", // Espacio entre las tarjetas en pantallas medianas.
+              },
+            },
           }}
         >
           {veggie.map((recipe) => {

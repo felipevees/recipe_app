@@ -25,6 +25,11 @@ const List = styled.div`
   display: flex;
   justify-content: center;
   margin: 2rem 0rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const SLink = styled(NavLink)`
@@ -52,5 +57,10 @@ const SLink = styled(NavLink)`
     h4 {
       color: white;
     }
+  }
+
+  @media (max-width: 768px) {
+    margin-right: 0;
+    margin-bottom: 1rem;
   }
 `;
